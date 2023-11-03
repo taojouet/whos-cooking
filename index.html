@@ -1,0 +1,112 @@
+<!-- FILEPATH: /C:/Users/TaoJOUET/Documents/01 DOCUMENTS/05 PERSO/code/whos-cooking/index.html -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ma Roue Tournante</title>
+    <style>
+      /* Styles pour la roue */
+      .wheel {
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background-color: #f1c40f;
+        position: relative;
+        overflow: hidden;
+      }
+      .wheel:before {
+        content: "";
+        display: block;
+        padding-top: 100%;
+      }
+      .wheel-item {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        transform-origin: center center;
+        font-size: 24px;
+        font-weight: bold;
+        color: #fff;
+        text-align: center;
+        line-height: 300px;
+      }
+      .wheel-item:nth-child(1) {
+        transform: rotate(0deg);
+        background-color: #e74c3c;
+      }
+      .wheel-item:nth-child(2) {
+        transform: rotate(60deg);
+        background-color: #3498db;
+      }
+      .wheel-item:nth-child(3) {
+        transform: rotate(120deg);
+        background-color: #2ecc71;
+      }
+      .wheel-item:nth-child(4) {
+        transform: rotate(180deg);
+        background-color: #f1c40f;
+      }
+      .wheel-item:nth-child(5) {
+        transform: rotate(240deg);
+        background-color: #9b59b6;
+      }
+      .wheel-item:nth-child(6) {
+        transform: rotate(300deg);
+        background-color: #1abc9c;
+      }
+      /* Styles pour le bouton */
+      .spin-button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #fff;
+        background-color: #f1c40f;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wheel">
+      <div class="wheel-item">Option 1</div>
+      <div class="wheel-item">Option 2</div>
+      <div class="wheel-item">Option 3</div>
+      <div class="wheel-item">Option 4</div>
+      <div class="wheel-item">Option 5</div>
+      <div class="wheel-item">Option 6</div>
+    </div>
+    <button class="spin-button">Tourner</button>
+    <script>
+      const wheel = document.querySelector(".wheel");
+      const spinButton = document.querySelector(".spin-button");
+      let deg = 0;
+      let spinning = false;
+
+      spinButton.addEventListener("click", () => {
+        if (spinning) return;
+        spinning = true;
+        deg = Math.floor(5000 + Math.random() * 5000);
+        wheel.style.transition = "all 10s ease-out";
+        wheel.style.transform = `rotate(${deg}deg)`;
+        wheel.classList.add("blur");
+      });
+
+      wheel.addEventListener("transitionend", () => {
+        wheel.classList.remove("blur");
+        spinning = false;
+        alert(`Vous avez gagné l'option ${getSelectedOption()}`);
+      });
+
+      function getSelectedOption() {
+        const options = document.querySelectorAll(".wheel-item");
+        const index = Math.floor((deg % 360) / (360 / options.length));
+        return options[index].textContent;
+      }
+    </script>
+  </body>
+</html>
